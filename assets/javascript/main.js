@@ -76,10 +76,10 @@ function addTasksFromLocal() {
                 
                 // Parse the JSON string to get the inner object
                 let innerObject = JSON.parse(jsonString);
-                console.log(jsonString)
-                console.log(JSON.parse(jsonString))
+                // console.log(jsonString)
+                // console.log(JSON.parse(jsonString))
                 
-                let jsonString = null;// the JSON string to be parsed
+                // let jsonString = null;// the JSON string to be parsed
                 console.log(jsonString);  // Log the JSON string
                 try {
                     let parsedData = JSON.parse(jsonString);
