@@ -79,6 +79,15 @@ function addTasksFromLocal() {
                 console.log(jsonString)
                 console.log(JSON.parse(jsonString))
                 
+                let jsonString = null;// the JSON string to be parsed
+                console.log(jsonString);  // Log the JSON string
+                try {
+                    let parsedData = JSON.parse(jsonString);
+                    console.log(parsedData);  // Log the parsed data
+                } catch (error) {
+                    console.error('Error parsing JSON:', error);
+                }
+                
                 function createTaskCard() {
     
                     // Create the main task card div
