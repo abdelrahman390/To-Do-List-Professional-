@@ -152,6 +152,8 @@ function tasksMain(){
 
         addTaskButton.addEventListener("click", function() {
 
+                        console.log("test")
+            
             let overlay = document.createElement("div")
             overlay.className = 'overlay';
             section.appendChild(overlay)
