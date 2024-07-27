@@ -267,23 +267,24 @@ function tasksMain(){
                     data: [allTasksData]
                 }
 
-                // function addDataToLocal() {
-                //     function getRandomThreeDigitNumber() {
+                function addDataToLocal() {
+                    function getRandomThreeDigitNumber() {
+                        // for (let i = 0; i < localStorage.length; i++) {
+                            let idNum = Math.floor(Math.random() * (999 - 100 + 1)) + 100;
+                            console.log(idNum)
+                            // if(localStorage.key(i) != idNum){
+                            //     console.log(localStorage.key(i))
+                            //     console.log(idNum)
+                                return idNum;
+                            // } 
+                        // }
 
-                //         for (let i = 0; i < localStorage.length; i++) {
-                //             let idNum = Math.floor(Math.random() * (999 - 100 + 1)) + 100;
+                    }
+                    let randomNumber = getRandomThreeDigitNumber();
+                    localStorage.setItem(`${randomNumber}`, JSON.stringify(NewTask));
 
-                //             if(localStorage.key(i) != idNum){
-                //                 return idNum;
-                //             } 
-                //         }
-
-                //     }
-                //     let randomNumber = getRandomThreeDigitNumber();
-                //     localStorage.setItem(`${randomNumber}`, JSON.stringify(NewTask));
-
-                // }
-                // addDataToLocal()
+                }
+                addDataToLocal()
 
                 overlay.remove()
                 window.location.reload();
