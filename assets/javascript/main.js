@@ -55,8 +55,7 @@ function checkIfAllTasksAreDone(test){
 } 
 
 function addTasksFromLocal() {
-
-    if(localStorage.length != 0){
+    if (localStorage.length != 0) {
         let allLocalStorageData = {};
         for (let i = 0; i < localStorage.length; i++) {
             // Get the key for the current index
@@ -68,94 +67,84 @@ function addTasksFromLocal() {
             // Store the key-value pair in the object
             allLocalStorageData[key] = value;
         }
-    
+
         for (let key in allLocalStorageData) {
             if (allLocalStorageData.hasOwnProperty(key)) {
                 // Get the JSON string for the current property
                 let jsonString = allLocalStorageData[key];
                 
                 // Parse the JSON string to get the inner object
-                let innerObject = JSON.parse(jsonString);
-                // console.log(jsonString)
-                // console.log(JSON.parse(jsonString))
-                
-                // let jsonString = null;// the JSON string to be parsed
-                console.log(jsonString);  // Log the JSON string
                 try {
-                    let parsedData = JSON.parse(jsonString);
-                    console.log(parsedData);  // Log the parsed data
-                } catch (error) {
-                    console.error('Error parsing JSON:', error);
-                }
-                
-                function createTaskCard() {
-    
-                    // Create the main task card div
-                    const taskCardDiv = document.createElement('div');
-                    taskCardDiv.className = 'task-card';
-                    taskCardDiv.setAttribute('data-id', `${key}`);
-    
-                    // Create the title input
-                    const title = document.createElement('div');
-                    title.className = 'title';
-                    title.innerText = innerObject['title']
-                    
-                    // Create the container div
-                    const containerDiv = document.createElement('div');
-                    containerDiv.className = 'container';
-    
-                    for (let i = 0; i < innerObject['data'][0].length; i++){
-                        const taskDiv = document.createElement('div');
-                        taskDiv.className = 'task';
-                        taskDiv.setAttribute('data-status', `${innerObject['data'][0][i]["status"]}`);
-    
-                        // Create the cont div
-                        const contDiv = document.createElement('div');
-                        contDiv.className = 'cont';
-    
-                        // // Create the num div
-                        const TaskNum = document.createElement('div');
-                        TaskNum.className = 'num';
-                        TaskNum.innerText = `${innerObject['data'][0][i]["num"]} `
-    
-                        // // Create the num div
-                        const TaskData = document.createElement('div');
-                        TaskData.className = 'TaskData';
-                        TaskData.innerText = ` ${innerObject['data'][0][i]["content"]}`
-                        
-                        // Create the task-content input
-                        const taskContentCheckBox = document.createElement('input');
-                        taskContentCheckBox.type = 'checkbox';
-                        innerObject['data'][0][i]["status"] == 'complete' ? taskContentCheckBox.checked = true : taskContentCheckBox.checked = false;
-    
-                        // Append numDiv and taskContentInput to contDiv
-                        containerDiv.appendChild(taskDiv);
-                        taskDiv.appendChild(contDiv);
-                        contDiv.appendChild(TaskNum);
-                        contDiv.appendChild(TaskData);
-                        taskDiv.appendChild(taskContentCheckBox);
+                    let innerObject = JSON.parse(jsonString);
+
+                    function createTaskCard() {
+                        // Create the main task card div
+                        const taskCardDiv = document.createElement('div');
+                        taskCardDiv.className = 'task-card';
+                        taskCardDiv.setAttribute('data-id', `${key}`);
+
+                        // Create the title input
+                        const title = document.createElement('div');
+                        title.className = 'title';
+                        title.innerText = innerObject['title'];
+
+                        // Create the container div
+                        const containerDiv = document.createElement('div');
+                        containerDiv.className = 'container';
+
+                        for (let i = 0; i < innerObject['data'][0].length; i++) {
+                            const taskDiv = document.createElement('div');
+                            taskDiv.className = 'task';
+                            taskDiv.setAttribute('data-status', `${innerObject['data'][0][i]["status"]}`);
+
+                            // Create the cont div
+                            const contDiv = document.createElement('div');
+                            contDiv.className = 'cont';
+
+                            // Create the num div
+                            const TaskNum = document.createElement('div');
+                            TaskNum.className = 'num';
+                            TaskNum.innerText = `${innerObject['data'][0][i]["num"]} `;
+
+                            // Create the TaskData div
+                            const TaskData = document.createElement('div');
+                            TaskData.className = 'TaskData';
+                            TaskData.innerText = ` ${innerObject['data'][0][i]["content"]}`;
+
+                            // Create the task-content input
+                            const taskContentCheckBox = document.createElement('input');
+                            taskContentCheckBox.type = 'checkbox';
+                            innerObject['data'][0][i]["status"] == 'complete' ? taskContentCheckBox.checked = true : taskContentCheckBox.checked = false;
+
+                            // Append numDiv and taskContentInput to contDiv
+                            containerDiv.appendChild(taskDiv);
+                            taskDiv.appendChild(contDiv);
+                            contDiv.appendChild(TaskNum);
+                            contDiv.appendChild(TaskData);
+                            taskDiv.appendChild(taskContentCheckBox);
+                        }
+
+                        const date = document.createElement('div');
+                        date.className = 'date';
+                        date.innerText = innerObject["date"];
+
+                        tasksContainer.appendChild(taskCardDiv);
+                        taskCardDiv.appendChild(title);
+                        taskCardDiv.appendChild(containerDiv);
+                        taskCardDiv.appendChild(date);
+
+                        checkIfAllTasksAreDone(taskCardDiv.parentElement.querySelectorAll(".task"));
                     }
-    
-                    const date = document.createElement('div');
-                    date.className = 'date';
-                    date.innerText = innerObject["date"]
-    
-                    tasksContainer.appendChild(taskCardDiv);
-                    taskCardDiv.appendChild(title);
-                    taskCardDiv.appendChild(containerDiv);
-                    taskCardDiv.appendChild(date);
-    
-                    checkIfAllTasksAreDone(taskCardDiv.parentElement.querySelectorAll(".task"))
-    
+                    createTaskCard();
+
+                } catch (error) {
+                    console.error(`Error parsing JSON for key "${key}":`, error);
                 }
-                createTaskCard()
-    
             }
         }
     }
-
 }
-addTasksFromLocal()
+addTasksFromLocal();
 
 function tasksMain(){
 
