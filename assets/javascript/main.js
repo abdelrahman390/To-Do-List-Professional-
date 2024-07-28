@@ -31,10 +31,11 @@ function sliderMain() {
             slider.classList.remove('open');
         })
 
-        if(window.innerWidth <= 600)
-        sliderButton.addEventListener("click", function() {
-            slider.classList.toggle("open")
-        })
+        if(window.innerWidth <= 600){
+            sliderButton.addEventListener("click", function() {
+                slider.classList.toggle("open")
+            })
+        }
     }
     sliderHandle()
 
