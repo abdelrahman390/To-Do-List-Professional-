@@ -36,6 +36,7 @@ function sliderMain() {
                 slider.classList.toggle("open")
             })
         }
+
     }
     sliderHandle()
 
@@ -156,6 +157,10 @@ function tasksMain(){
     function createTask() {
 
         addTaskButton.addEventListener("click", function() {
+
+            if(window.innerWidth <= 600){
+                    slider.classList.remove("open")
+            }
 
             let overlay = document.createElement("div")
             overlay.className = 'overlay';
