@@ -138,7 +138,7 @@ function addTasksFromLocal() {
                     createTaskCard();
 
                 } catch (error) {
-                    console.error(`Error parsing JSON for key "${key}":`, error);
+                    // console.error(`Error parsing JSON for key "${key}":`, error);
                 }
             }
         }
@@ -146,16 +146,16 @@ function addTasksFromLocal() {
 }
 addTasksFromLocal();
 
+
 function tasksMain(){
 
     let completeTasksInput = document.querySelectorAll(".task-card .container .task  input");
+    let DeleteTaskButton  = null;
 
     function createTask() {
 
         addTaskButton.addEventListener("click", function() {
 
-                        console.log("test")
-            
             let overlay = document.createElement("div")
             overlay.className = 'overlay';
             section.appendChild(overlay)
@@ -188,14 +188,20 @@ function tasksMain(){
                 numDiv.className = 'num';
                 numDiv.textContent = num + ' - ';
 
+                const deleteTaskImg = document.createElement('img');
+                deleteTaskImg.className = 'deleteImg';
+                deleteTaskImg.src = 'assets/imgs/close.png'
+                DeleteTaskButton = deleteTaskImg
+
                 // Create the task-content input
                 const taskContentInput = document.createElement('input');
-                taskContentInput.className = 'task-content';
+                taskContentInput.className = 'TaskData';
                 taskContentInput.placeholder = '...';
 
                 // Append numDiv and taskContentInput to contDiv
                 contDiv.appendChild(numDiv);
                 contDiv.appendChild(taskContentInput);
+                contDiv.appendChild(deleteTaskImg);
 
                 // Append contDiv to taskDiv
                 taskDiv.appendChild(contDiv);
@@ -215,6 +221,8 @@ function tasksMain(){
             addTaskButton.addEventListener('click', () => {
                 const taskCount = containerDiv.getElementsByClassName('task').length + 1;
                 containerDiv.insertBefore(createTask(taskCount), addTaskButton);
+                // DeleteTaskButton = overlay.querySelectorAll(".deleteImg");
+                getAllDeleteTaskButton()
             });
 
             // Append titleInput, containerDiv, and addTaskButton to taskCardDiv
@@ -224,20 +232,37 @@ function tasksMain(){
 
             let doneTask = document.createElement("button");
             doneTask.className = 'done-task';
-            doneTask.innerHTML = 'Create-task';
+            doneTask.innerHTML = 'Create Task';
 
             let cancelButton = document.createElement("button");
             cancelButton.className = 'cancel-button';
-            cancelButton.innerHTML = 'cancel-button';
+            cancelButton.innerHTML = 'Cancel';
 
             overlay.appendChild(taskCardDiv);
             overlay.appendChild(doneTask);
             overlay.appendChild(cancelButton);
 
+            getAllDeleteTaskButton()
+
+            function getAllDeleteTaskButton() {
+                DeleteTaskButton = overlay.querySelectorAll(".deleteImg");
+
+                DeleteTaskButton.forEach(element => {
+                        element.addEventListener("click", function() {
+                            element.parentElement.parentElement.remove();
+
+                            addTaskButton.parentElement.querySelectorAll(".task").forEach((element ,index)=> {
+                                element.querySelector(".cont").querySelector(".num").innerHTML = `${index + 1} -` 
+                            });
+                        })
+                });
+            }
+
 // ####################################################
 
+            // when press create task button 
             doneTask.addEventListener("click", function() {
-
+                
                 taskTitle = overlay.querySelector(".title")
                 tasksContent = overlay.querySelectorAll(".task")
 
@@ -245,7 +270,7 @@ function tasksMain(){
                 let allTasksData = [];
                 tasksContent.forEach(element => { 
                     let num = element.querySelector(".num").textContent
-                    let taskContent = element.querySelector(".task-content").value
+                    let taskContent = element.querySelector(".TaskData").value
                     let tasksData = {num: num , content: taskContent, "status": "false"}
                     allTasksData.push(tasksData);
                 });
@@ -257,19 +282,24 @@ function tasksMain(){
                 }
 
                 function addDataToLocal() {
-                    function getRandomThreeDigitNumber() {
-                        // for (let i = 0; i < localStorage.length; i++) {
-                            let idNum = Math.floor(Math.random() * (999 - 100 + 1)) + 100;
-                            console.log(idNum)
-                            // if(localStorage.key(i) != idNum){
-                            //     console.log(localStorage.key(i))
-                            //     console.log(idNum)
-                                return idNum;
-                            // } 
-                        // }
 
+                    function getRandomThreeDigitNumber() {
+
+                        if  (localStorage.length == 0 ){
+                            let idNum = Math.floor(Math.random() * (999 - 100 + 1)) + 100;
+                            return idNum;
+                        } else {
+                            for (let i = 0; i < localStorage.length; i++) {
+                                let idNum = Math.floor(Math.random() * (999 - 100 + 1)) + 100;
+                                if(localStorage.key(i) != idNum){
+                                    return idNum;
+                                } 
+                            } 
+                        }
                     }
+
                     let randomNumber = getRandomThreeDigitNumber();
+                    console.log("main" , randomNumber)
                     localStorage.setItem(`${randomNumber}`, JSON.stringify(NewTask));
 
                 }
@@ -280,10 +310,9 @@ function tasksMain(){
 
             })
 
+            // when press cancel button 
             cancelButton.addEventListener("click", function() {
-
                 overlay.remove()
-
             })
 
         })
@@ -406,8 +435,6 @@ function addSettingToTasksBox(){
 
         // Append trash div to the body or any other container
         element.appendChild(trashDiv);
-
-
     });
 
 
@@ -419,7 +446,6 @@ function addSettingToTasksBox(){
 addSettingToTasksBox()
 
 function tasksSetting(){
-
     settingButton.forEach(settingButton => {
 
         let didntDelete = settingButton.parentElement.querySelector(".task-card .trash  .settingBox .boxesCont .no"),
@@ -433,13 +459,9 @@ function tasksSetting(){
         dateDiv = settingButton.parentElement.parentElement.querySelector(".date "),
         deleteImg = settingButton.parentElement.parentElement.querySelector(".deleteImg");
         EditedTaskDate = null;
-
-
         
         settingButton.addEventListener("click", function(){
-
             settingButton.parentElement.classList.toggle('open');
-
             function deleteTask() {
                 DeleteButton.addEventListener("click", function(){
                     settingButton.parentElement.querySelector(".task-card .trash  .settingBox ").querySelector('.deleteBox').classList.toggle('open');
@@ -459,10 +481,10 @@ function tasksSetting(){
             deleteTask()
 
             // ######################## Edit Task ########################
-
-            let elementId = settingButton.parentElement.parentElement.getAttribute('data-id');
-            let editedTasks = settingButton.parentElement.parentElement;
             function editTask() {
+                let elementId = settingButton.parentElement.parentElement.getAttribute('data-id');
+                let editedTasks = settingButton.parentElement.parentElement;
+                let cancelButton = null;
 
                 editButton.addEventListener("click", function() {
 
@@ -482,7 +504,7 @@ function tasksSetting(){
                         DoneButton.classList.add('DoneButton');
                         DoneButton.innerText = "Save Edit";
 
-                        let cancelButton = document.createElement("button");
+                        cancelButton = document.createElement("button");
                         cancelButton.classList.add('cancel-button');
                         cancelButton.innerText = "Cancel";
 
@@ -552,10 +574,6 @@ function tasksSetting(){
 
                         })
 
-                        cancelButton.addEventListener("click", function() {
-                            window.location.reload();
-                        })
-
                         containerDiv.forEach(element => {
                             let taskClass = element.querySelector(".cont").children[1].className;
                             let taskValue = element.querySelector(".cont").children[1].innerText;
@@ -579,6 +597,7 @@ function tasksSetting(){
                             })
 
                         });
+
                     }
                     editTaskHandle()
 
@@ -611,10 +630,16 @@ function tasksSetting(){
                     }
                     SaveAddEditedTask()
 
+                    function cancelEdit() {
+                        cancelButton.addEventListener("click", function() {
+                            window.location.reload();
+                        })
+                    }
+                    cancelEdit()
+
                 })
             }
             editTask()
-
         })
     });
 }
