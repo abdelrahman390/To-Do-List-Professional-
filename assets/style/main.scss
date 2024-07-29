@@ -389,7 +389,28 @@ section{
             }
         }
     }
+
+    & footer{
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        gap: 9px;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        padding: 12px 0px;
+        background-color: #12132e;
+        & a{
+            color: white;
+            text-decoration: underline;
+            font-size: 18px;
+        }
+    }
 }
+
+
 
 
 @media screen and (max-width: 600px) {
