@@ -1062,6 +1062,9 @@ function handleViewDeletedTask() {
                         // Create the cont div
                         const contDiv = document.createElement('div');
                         contDiv.className = 'cont';
+                        
+                        const upperTaskCont = document.createElement('div');
+                        upperTaskCont.className = 'upperTaskCont';
         
                         // Create the num div
                         const TaskNum = document.createElement('div');
@@ -1080,9 +1083,10 @@ function handleViewDeletedTask() {
         
                         // Append numDiv and taskContentInput to contDiv
                         containerDiv.appendChild(taskDiv);
-                        taskDiv.appendChild(contDiv);
                         contDiv.appendChild(TaskNum);
                         contDiv.appendChild(TaskData);
+                        upperTaskCont.appendChild(contDiv)
+                        taskDiv.appendChild(upperTaskCont);
                         taskCardDiv.appendChild(DoneMessage)
                     }
         
