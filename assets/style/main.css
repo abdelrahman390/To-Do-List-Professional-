@@ -106,6 +106,9 @@ section main .slider .boxes .top {
           flex-direction: column;
   gap: 20px;
 }
+section main .slider .boxes .top .add-task-photo {
+  display: none;
+}
 section main .slider .boxes .bottom {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -118,6 +121,9 @@ section main .slider .boxes .bottom {
 }
 section main .slider .boxes .bottom .delete-history {
   background-color: var(--third-color);
+}
+section main .slider .boxes .bottom .delete-history-photo {
+  display: none;
 }
 section main .slider .boxes button {
   border: none;
@@ -454,14 +460,15 @@ section main .tasks-container {
 }
 .task-card .container .task .bottomTaskCont h1 {
   font-size: 15px;
-  text-align: justify;
+  text-align: left;
+  font-weight: 400;
 }
 .task-card .container .task .bottomTaskCont h1.complete_date {
   margin-top: 2px;
 }
 .task-card .container .task.open .bottomTaskCont {
   max-height: 150px;
-  margin: 15px 0;
+  margin: 15px 0 0;
   border-top: 1px solid var(--primary-color);
   padding-top: 15px;
 }
@@ -771,11 +778,49 @@ section footer a {
     gap: 10px;
   }
   section main .slider {
-    -webkit-transform: translateX(-214px);
-            transform: translateX(-214px);
+    position: unset;
+    height: auto;
+    width: 100vw;
+    -webkit-transform: none !important;
+            transform: none !important;
+    background-color: transparent;
+    margin-top: 15px;
   }
   section main .slider .boxes {
-    height: 70%;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+    padding: 10px;
+    padding-bottom: 5px;
+  }
+  section main .slider .boxes .top .add-task {
+    display: none;
+  }
+  section main .slider .boxes .top .add-task-photo {
+    display: block;
+  }
+  section main .slider .boxes .bottom {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+  }
+  section main .slider .boxes .bottom .delete-history {
+    display: none;
+  }
+  section main .slider .boxes .bottom .delete-history-photo {
+    display: block;
+  }
+  section main .slider .boxes .bottom .clear-tasks {
+    padding: 5px;
+    min-width: unset;
+  }
+  section main .slider .boxes img {
+    width: 50px;
+  }
+  section main .slider span {
+    display: none;
   }
   section main .tasks-container {
     width: 100%;
