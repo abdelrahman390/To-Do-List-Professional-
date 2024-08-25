@@ -170,15 +170,11 @@ function addTasksFromLocal() {
                             completedDate.classList = "complete_date"
                             if (innerObject.data[0][i]["complete_date"] !== undefined){
                                 completedDate.innerText = `Complete date: ${innerObject.data[0][i]["complete_date"]}`
-                                // console.log(innerObject.data[0][i]["complete_date"])
                             }
 
-                            // Append numDiv and taskContentInput to contDiv
                             containerDiv.appendChild(taskDiv);
-                            // taskDiv.appendChild(contDiv);
                             contDiv.appendChild(TaskNum);
                             contDiv.appendChild(TaskData);
-                            // taskDiv.appendChild(taskContentCheckBox);
                             upperTaskCont.appendChild(contDiv)
                             upperTaskCont.appendChild(taskContentCheckBox)
                             taskDiv.appendChild(upperTaskCont);
@@ -187,7 +183,6 @@ function addTasksFromLocal() {
                             bottomTaskCont.appendChild(completedDate)
 
                         }
-                        // console.log("!!!!!!!!!!!!!!!!!!!")
 
                         // Create the task done alarm H2
                         const DoneMessage = document.createElement('h2');
@@ -792,12 +787,14 @@ function tasksSetting(){
                                     taskContent = element.querySelector(".cont").querySelector("input").value
                                     status = element.getAttribute("data-status");
 
-                                    if(JSON.parse(localStorage.getItem(id)).data[0].length !== index  && JSON.parse(localStorage.getItem(id)).data[0][index]['complete_date'] != undefined){
+                                    // console.log(JSON.parse(localStorage.getItem(id)).data[0][index])
+                                    if(JSON.parse(localStorage.getItem(id)).data[0][index] === undefined){
+                                        tasksData = {num: num , content: taskContent, "status": `${status}`, "added_date": addedDate}
+                                    } else {
                                         let completeDate = JSON.parse(localStorage.getItem(id)).data[0][index]['complete_date']
                                         tasksData = {num: num , content: taskContent, "status": `${status}`, "added_date": addedDate, "complete_date": completeDate}
-                                    } else {
-                                        tasksData = {num: num , content: taskContent, "status": `${status}`, "added_date": addedDate}
                                     }
+
                                     allTasksData.push(tasksData);
                                 });
 
@@ -806,7 +803,8 @@ function tasksSetting(){
                                     date: `${JSON.parse(localStorage.getItem(`${elementId}`))['date']}`,
                                     data: [allTasksData]
                                 }
-                                
+                                // console.log(editedTask)
+
                                 localStorage.setItem(`${elementId}` , JSON.stringify(editedTask))
                                 window.location.reload();
                             })
@@ -1023,7 +1021,6 @@ function handleViewDeletedTask() {
 
                 }
             }
-            // console.log("******************************************************************************")
             restoreDeletedTasks()
         })
 
