@@ -587,10 +587,10 @@ function tasksSetting(){
         deleteImg = settingButton.parentElement.parentElement.querySelector(".deleteImg");
         EditedTaskDate = null;
 
-        if(index === 0){
+        // if(index === 0){
 
-            // console.log(settingButton) // one time
             
+            // console.log(settingButton) // one time
             settingButton.addEventListener("click", function(){
                 settingButton.parentElement.classList.toggle('open');
 
@@ -599,86 +599,6 @@ function tasksSetting(){
 
                         // console.log("tets") // one time
                     DeleteButton.addEventListener("click", function(){
-
-                        // console.log("tets")
-
-                        if(DeleteButton.parentElement.parentElement.parentElement.getAttribute("edit") == "true"){
-                            
-                            let taskData = DeleteButton.parentElement.parentElement.parentElement
-                            let id = taskData.getAttribute("data-id")
-                            let jsonTaskData = JSON.parse(localStorage.getItem(id))
-
-                            // // Update the title
-                            let title = document.createElement("div")
-                            title.classList = "title"
-                            title.innerHTML = jsonTaskData.title; 
-
-                            // Update the tasks inside the container
-                            let tasks = taskData.querySelectorAll('.task');
-
-                            tasks.forEach((task, index) => {
-                                let taskNum = jsonTaskData.data[0][index].num;
-
-                                const newTask = document.createElement("div")
-                                newTask.classList = 'task'
-
-                                const newTaskNum = document.createElement("div")
-                                newTaskNum.classList = 'num'
-                                newTaskNum.innerText = taskNum;
-
-                                const newTaskContent = document.createElement("div")
-                                newTaskContent.classList = 'TaskData'
-                                newTaskContent.innerText = jsonTaskData.data[0][index].content;
-                                if(jsonTaskData.data[0][index].status == 'complete'){
-                                    newTaskContent.style = "text-decoration: line-through; opacity: 0.5;"
-                                }
-                                
-                                const cont = document.createElement("div")
-                                cont.classList = 'cont'
-
-                                const newTaskCheckBox = document.createElement("input")
-                                newTaskCheckBox.type = 'checkbox'
-                                newTaskCheckBox.checked = jsonTaskData.data[0][index].status == 'complete' ? true : false
-
-
-                                const upperTaskCont = document.createElement("div")
-                                upperTaskCont.classList = 'upperTaskCont'
-
-                                const bottomTaskCont = document.createElement("div")
-                                bottomTaskCont.classList = 'bottomTaskCont'
-
-                                const added_date = document.createElement("h1")
-                                added_date.classList = 'added_date'
-                                added_date.innerText = jsonTaskData.data[0][index]['added_date']
-
-                                const complete_date = document.createElement("h1")
-                                complete_date.classList = 'complete_date'
-                                complete_date.innerText = jsonTaskData.data[0][index]['complete_date']
-                                
-                                cont.appendChild(newTaskNum)
-                                cont.appendChild(newTaskContent)
-                                upperTaskCont.appendChild(cont)
-                                upperTaskCont.appendChild(newTaskCheckBox)
-                                bottomTaskCont.appendChild(added_date)
-                                bottomTaskCont.appendChild(complete_date)
-                                newTask.appendChild(upperTaskCont)
-                                newTask.appendChild(bottomTaskCont)
-
-                                task.replaceWith(newTask)
-                                
-                            });
-
-                            let taskDate = document.createElement("div")
-                            taskDate.classList = "date"
-                            taskDate.innerText = jsonTaskData.date
-
-                            taskData.querySelector(".addTaskButton").remove()
-                            taskData.querySelector(".buttons-div").remove()
-
-                            taskData.querySelector(".title").replaceWith(title)
-                            taskData.appendChild(taskDate)
-                            // completeTasks() 
-                        }
 
                         settingButton.parentElement.querySelector(".task-card .trash  .settingBox ").querySelector('.deleteBox').classList.toggle('open');
                         return;
@@ -709,6 +629,9 @@ function tasksSetting(){
 
                     editButton.addEventListener("click", function() {
 
+                        // console.log(settingButton.parentElement)
+                        settingButton.parentElement.style = "display: none"
+
                         let removeBottomTaskCont = document.querySelectorAll(".tasks-container .task-card .container .task")
                         removeBottomTaskCont.forEach(element => {
                             element.querySelector(".bottomTaskCont").remove()
@@ -716,8 +639,6 @@ function tasksSetting(){
 
                         let taskCard = editButton.parentElement.parentElement.parentElement;
                         taskCard.setAttribute("edit", "true")
-                        // let taskOnEdit = true
-                        // console.log(editButton.parentElement.parentElement.parentElement)
 
                         if(settingButton.parentElement.parentElement.getAttribute("data-status") == 'complete'){
                             settingButton.parentElement.parentElement.classList.add("on-edit")
@@ -846,28 +767,23 @@ function tasksSetting(){
                             let DoneButtonB = settingButton.parentElement.parentElement.querySelector(".DoneButton");
 
                             DoneButtonB.addEventListener("click", function() {
-                                let num = null;
-                                let taskContent = null;
-                                let status = null;
-                                let tasksData = {}
-                                let addedDate ;
-                                let allTasksData = []
+                                let num = null,
+                                    taskContent = null,
+                                    status = null,
+                                    tasksData = {},
+                                    addedDate ,
+                                    allTasksData = [];
         
                                 settingButton.parentElement.parentElement.querySelectorAll(".task").forEach((element , index) => {
 
-                                    if(element.children.length === 2){
-                                        addedDate = element.querySelector(".bottomTaskCont").querySelector("h1").innerHTML.split(":").slice(1).toLocaleString()
-                                        } else{
-                                            let now = new Date();
-                                            let deleteTime = now.toLocaleString();
-                                            addedDate = deleteTime
-                                        }
+                                    let id = element.parentElement.parentElement.getAttribute("data-id");
+
+                                    addedDate = JSON.parse(localStorage.getItem(id)).data[0][index]["added_date"]
+
                                     num = `${index + 1} -`;
                                     taskContent = element.querySelector(".cont").querySelector("input").value
                                     status = element.getAttribute("data-status");
-                                    let id = element.parentElement.parentElement.getAttribute("data-id")
-                                    // console.log(index + 1)
-                                    console.log(JSON.parse(localStorage.getItem(id)).data[0].length !== index)
+
                                     if(JSON.parse(localStorage.getItem(id)).data[0].length !== index  && JSON.parse(localStorage.getItem(id)).data[0][index]['complete_date'] != undefined){
                                         let completeDate = JSON.parse(localStorage.getItem(id)).data[0][index]['complete_date']
                                         tasksData = {num: num , content: taskContent, "status": `${status}`, "added_date": addedDate, "complete_date": completeDate}
@@ -901,11 +817,10 @@ function tasksSetting(){
                 }
                 editTask()
             })
-        }
+        // }
     });
 }
 tasksSetting()
-
 
 function everyTaskData() {
 
@@ -955,7 +870,6 @@ function everyTaskData() {
 
     });
 }
-
 
 function setDeletedTaskToLocalStorage(id) {
 
