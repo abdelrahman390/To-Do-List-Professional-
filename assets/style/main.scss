@@ -76,6 +76,9 @@ section{
                     align-items: center;
                     flex-direction: column;
                     gap: 20px;
+                    & .add-task-photo{
+                        display: none;
+                    }
                 }
                 & .bottom{
                     display: flex;
@@ -83,6 +86,9 @@ section{
                     gap: 15px;
                     & .delete-history{
                         background-color: var(--third-color);
+                    }
+                    & .delete-history-photo{
+                        display: none
                     }
                 }
                 & button{
@@ -323,7 +329,8 @@ section{
                             transition-timing-function: linear;
                             & h1{
                                 font-size: 15px;
-                                text-align: justify;
+                                text-align: left;
+                                font-weight: 400;
                                 &.complete_date{
                                     margin-top: 2px;
                                 }
@@ -332,7 +339,7 @@ section{
                         &.open {
                             & .bottomTaskCont{
                                 max-height: 150px;
-                                margin: 15px 0;
+                                margin: 15px 0 0;
                                 border-top: 1px solid var(--primary-color);
                                 padding-top: 15px;
                             } 
@@ -582,9 +589,43 @@ section{
         }
         & main {
             & .slider{
-                transform: translateX(-214px);
+                position: unset;
+                height: auto;
+                width: 100vw;
+                transform: none !important;
+                background-color: transparent;
+                margin-top: 15px;
                 & .boxes{
-                    height: 70%;
+                    flex-direction: row-reverse;
+                    padding: 10px;
+                    padding-bottom: 5px;
+                    & .top{
+                        & .add-task{
+                            display: none;
+                        }
+                        & .add-task-photo{
+                            display: block;
+                        }
+                    }
+                    & .bottom{
+                        flex-direction: row-reverse;
+                        & .delete-history{
+                            display: none;
+                        }
+                        & .delete-history-photo{
+                            display: block;
+                        }
+                        & .clear-tasks{
+                            padding: 5px;
+                            min-width: unset;
+                        }
+                    }
+                    & img{
+                        width: 50px;
+                    }
+                }
+                & span{
+                    display: none;
                 }
             }
             & .tasks-container {
