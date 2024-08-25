@@ -777,8 +777,16 @@ function tasksSetting(){
                                 settingButton.parentElement.parentElement.querySelectorAll(".task").forEach((element , index) => {
 
                                     let id = element.parentElement.parentElement.getAttribute("data-id");
+                                    let alreadyExistTasks = JSON.parse(localStorage.getItem(id)).data[0].length
 
-                                    addedDate = JSON.parse(localStorage.getItem(id)).data[0][index]["added_date"]
+                                    if(index < alreadyExistTasks){
+                                        addedDate = JSON.parse(localStorage.getItem(id)).data[0][index]["added_date"]
+                                    } else{
+                                        let now = new Date();
+                                        let completeDate = now.toLocaleString();
+
+                                        addedDate = completeDate;
+                                    }
 
                                     num = `${index + 1} -`;
                                     taskContent = element.querySelector(".cont").querySelector("input").value
@@ -798,6 +806,7 @@ function tasksSetting(){
                                     date: `${JSON.parse(localStorage.getItem(`${elementId}`))['date']}`,
                                     data: [allTasksData]
                                 }
+                                
                                 localStorage.setItem(`${elementId}` , JSON.stringify(editedTask))
                                 window.location.reload();
                             })
