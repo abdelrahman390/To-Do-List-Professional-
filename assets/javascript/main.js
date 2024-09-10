@@ -1120,8 +1120,9 @@ clearTasks()
 
 
 function handleTasksViewInPage() {
+    console.log("test")
 
-    window.addEventListener('resize', function() {
+    // window.addEventListener('resize', function() {
         let allTasksCard = document.querySelectorAll(".tasks-container .task-card")
 
         let tasksContainerWidth = allTasksCard[0].parentElement.offsetWidth
@@ -1179,8 +1180,7 @@ function handleTasksViewInPage() {
                 }
             }
         });
-    });
-
+    // });
 }
 handleTasksViewInPage()
 
