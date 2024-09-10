@@ -1164,27 +1164,6 @@ function handleTasksViewInPage() {
 }
 handleTasksViewInPage()
 
-// function handleEveryNestedTaskData() {
-
-//     let test = document.querySelectorAll(".tasks-container .task-card .container .task")
-
-//     test.forEach(element => {
-//         element.addEventListener("click", function (){
-//             element.classList.toggle("open")
-//         })
-
-//         // Create a ResizeObserver instance
-//         let resizeObserver = new ResizeObserver(entries => {
-//         for (let entry of entries) {
-//             // let height = entry.contentRect.height;
-//             // console.log('Element height changed to: ' + height + 'px');
-//             handleTasksViewInPage()
-//         }
-//         });
-
-//         resizeObserver.observe(element);
-
-//     });
 
 // }
 // handleEveryNestedTaskData()
