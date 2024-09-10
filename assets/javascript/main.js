@@ -839,41 +839,21 @@ function everyTaskData() {
     let test = document.querySelectorAll(".tasks-container .task-card .container .task")
 
     test.forEach(element => {
-        // console.log(element)
-
-        // let checkBoxClicked = false
-        // element.parentElement.querySelectorAll(".upperTaskCont").forEach(element => {
-        //     element.children[1].addEventListener("click", function() {
-        //         element.children[1].addEventListener("click", function() {
-        //             if(element.children[1].checked){
-        //                 // element.parentElement.classList.toggle("open")
-        //                 // element.parentElement.preventDefault;
-        //                 // console.log(element.parentElement)
-        //             }
-        //             // console.log(element.children[1].checked)
-        //             // console.log(element.children[1])
-        //             // checkBoxClicked = true
-        //             // return;
-        //         })
-        //     })
-        // });
-
         element.addEventListener("click", function (){
-            // console.log(element)
-            // console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-            // if(checkBoxClicked === false){
-
-            // console.log(stopEvent)
-                // if(stopEvent){
-                    // console.log(stopEvent)
-                    // element.preventDefault();
-                // } else if (stopEvent == false){
-                    // console.log("error", stopEvent)
-                    element.classList.toggle("open")
-                // }
-                
-            // }
+            element.classList.toggle("open")
+                        console.log(element);
         })
+
+        // Create a ResizeObserver instance
+        let resizeObserver = new ResizeObserver(entries => {
+        for (let entry of entries) {
+            let height = entry.contentRect.height;
+            console.log('Element height changed to: ' + height + 'px');
+            handleTasksViewInPage()
+        }
+        });
+
+        resizeObserver.observe(element);
 
     });
 }
@@ -1184,27 +1164,27 @@ function handleTasksViewInPage() {
 }
 handleTasksViewInPage()
 
-function handleEveryNestedTaskData() {
+// function handleEveryNestedTaskData() {
 
-    let test = document.querySelectorAll(".tasks-container .task-card .container .task")
+//     let test = document.querySelectorAll(".tasks-container .task-card .container .task")
 
-    test.forEach(element => {
-        element.addEventListener("click", function (){
-            element.classList.toggle("open")
-        })
+//     test.forEach(element => {
+//         element.addEventListener("click", function (){
+//             element.classList.toggle("open")
+//         })
 
-        // Create a ResizeObserver instance
-        let resizeObserver = new ResizeObserver(entries => {
-        for (let entry of entries) {
-            // let height = entry.contentRect.height;
-            // console.log('Element height changed to: ' + height + 'px');
-            handleTasksViewInPage()
-        }
-        });
+//         // Create a ResizeObserver instance
+//         let resizeObserver = new ResizeObserver(entries => {
+//         for (let entry of entries) {
+//             // let height = entry.contentRect.height;
+//             // console.log('Element height changed to: ' + height + 'px');
+//             handleTasksViewInPage()
+//         }
+//         });
 
-        resizeObserver.observe(element);
+//         resizeObserver.observe(element);
 
-    });
+//     });
 
-}
-handleEveryNestedTaskData()
+// }
+// handleEveryNestedTaskData()
