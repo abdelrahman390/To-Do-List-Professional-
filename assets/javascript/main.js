@@ -728,7 +728,7 @@ function tasksSetting(){
                                     HandleTasksArrangeWhenDeleteOne()
                                 })
 
-
+                                everyTaskData()
                             })
 
                             containerDiv.forEach(element => {
@@ -817,8 +817,8 @@ function tasksSetting(){
                             })
                         }
                         cancelEdit()
-
                         everyTaskData()
+                        
 
                     })
                 }
@@ -830,11 +830,6 @@ function tasksSetting(){
 tasksSetting()
 
 function everyTaskData() {
-
-    if (running){
-        return
-    }
-    running = true
 
     let test = document.querySelectorAll(".tasks-container .task-card .container .task")
 
@@ -1098,9 +1093,7 @@ function clearTasks() {
 }
 clearTasks()
 
-
 function handleTasksViewInPage() {
-    console.log("test")
 
     // window.addEventListener('resize', function() {
         let allTasksCard = document.querySelectorAll(".tasks-container .task-card")
@@ -1116,6 +1109,9 @@ function handleTasksViewInPage() {
         let freeSpace = tasksContainerWidth - (taskWidth * (numberOfBoxes - 1)) - (gap * numberOfBoxes - 1);
     
         allTasksCard.forEach((element, index) => {
+            let topElement = element.clientHeight + 10
+            console.log(topElement)
+            console.log(element)
             if(numberOfBoxes > 3){
                 if((index + 2) <= numberOfBoxes){
                     if(index == 0){
@@ -1160,10 +1156,8 @@ function handleTasksViewInPage() {
                 }
             }
         });
+        console.log("$$$$$$$$$$$$$$$$")
     // });
+
 }
 handleTasksViewInPage()
-
-
-// }
-// handleEveryNestedTaskData()
