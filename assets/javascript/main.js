@@ -1117,3 +1117,69 @@ function clearTasks() {
 
 }
 clearTasks()
+
+
+function handleTasksViewInPage() {
+
+    window.addEventListener('resize', function() {
+        let allTasksCard = document.querySelectorAll(".tasks-container .task-card")
+
+        let tasksContainerWidth = allTasksCard[0].parentElement.offsetWidth
+        let taskWidth = allTasksCard[0].offsetWidth
+        let gap = 20;
+    
+        let numberOfBoxes = 1;
+        while (tasksContainerWidth / numberOfBoxes >= (taskWidth + gap)) {
+            numberOfBoxes++ 
+        }
+        let freeSpace = tasksContainerWidth - (taskWidth * (numberOfBoxes - 1)) - (gap * numberOfBoxes - 1);
+    
+        allTasksCard.forEach((element, index) => {
+            if(numberOfBoxes > 3){
+                if((index + 2) <= numberOfBoxes){
+                    if(index == 0){
+                        element.style.cssText = `left: ${0} `
+                    } else {
+                        element.style.cssText = `left: ${(index * (taskWidth + gap)) + ((freeSpace / (numberOfBoxes - 1)) * index) }px`
+                    }
+                } else {
+                    let topElement = (allTasksCard[(index + 1) - numberOfBoxes].clientHeight + 10)
+                    let styles = window.getComputedStyle(allTasksCard[(index + 1) - numberOfBoxes]);
+                    let topElementTopPosition = styles.getPropertyValue("top").split("px")[0]
+                    element.style.cssText = `top: ${+topElementTopPosition + +topElement + gap}px; left: ${styles.getPropertyValue('left')}`
+                }
+            } else if(numberOfBoxes == 3) {
+                if((index + 2) <= numberOfBoxes){
+                    if(index == 0){
+                        element.style.cssText = `left: ${freeSpace / 3}px `
+                    } else {
+                        element.style.cssText = `left: ${(index * (taskWidth + gap)) + ((freeSpace / 3) * 2) }px`
+                    }
+                } else {
+                    let topElement = (allTasksCard[(index + 1) - numberOfBoxes].clientHeight + 10)
+                    let styles = window.getComputedStyle(allTasksCard[(index + 1) - numberOfBoxes]);
+                    let topElementTopPosition = styles.getPropertyValue("top").split("px")[0]
+                    element.style.cssText = `top: ${+topElementTopPosition + +topElement + gap}px; left: ${styles.getPropertyValue('left')}`
+                }
+            } else if(numberOfBoxes == 2){
+                if(index == 0) {
+                    if(index == 0){
+                        element.style.cssText = `left: ${freeSpace / 2 + gap}px `
+                    }
+                } else {
+                    let topElement = (allTasksCard[(index + 1) - numberOfBoxes].clientHeight + 10)
+                    let styles = window.getComputedStyle(allTasksCard[(index + 1) - numberOfBoxes]);
+                    let topElementTopPosition = styles.getPropertyValue("top").split("px")[0]
+                    element.style.cssText = `top: ${+topElementTopPosition + topElement + gap + 10}px; left: ${styles.getPropertyValue('left')}`
+                    // console.log(topElementTopPosition)
+                    // console.log(topElement)
+                    // console.log(gap)
+                    // console.log(element)
+                    console.log('%%%%%%%%%%%%%%%%')
+                }
+            }
+        });
+    });
+
+}
+handleTasksViewInPage()
